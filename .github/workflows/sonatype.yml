@@ -1,0 +1,24 @@
+name: WebGoat Sonatype Demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    env:
+      JAVA_HOME: /opt/homebrew/Cellar/openjdk@25/25.0.4.1/libexec/openjdk.jdk/Contents/Home
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check Java
+        run: |
+          java -version
+          ./mvnw -v
+
+      - name: Build WebGoat
+        run: |
+          ./mvnw clean package -DskipTests -P!start-server
