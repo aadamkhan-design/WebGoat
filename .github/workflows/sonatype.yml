@@ -22,3 +22,13 @@ jobs:
       - name: Build WebGoat
         run: |
           ./mvnw clean package -DskipTests -P!start-server
+
+      - name: Sonatype Lifecycle Evaluation
+        id: evaluate
+        uses: sonatype/actions/evaluate@v1
+        with:
+          iq-server-url: http://localhost:8070
+          username: ${{ secrets.LIFECYCLE_USERNAME }}
+          password: ${{ secrets.LIFECYCLE_PASSWORD }}
+          application-id: webgoatgithub
+          scan-targets: target/*.jar
